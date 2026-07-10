@@ -1,0 +1,15 @@
+# Secrets — NEVER commit real keys
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.mypy_cache/
+.pytest_cache/
+
+# Output
+*.csv
+leads_output/
