@@ -1,4 +1,4 @@
-# 🤖 Autonomous AI SDR Agent
+# Autonomous AI SDR Agent
 
 An AI Sales Development Representative that automates top-of-funnel prospecting:
 given an **Ideal Customer Profile (ICP)** and an **offer**, it **discovers** matching
@@ -10,42 +10,42 @@ fits — turning hours of manual research into minutes.
 
 ---
 
-## ✨ What it does (Phase 1)
+## What it does (Phase 1)
 
 | Stage | What happens |
 |-------|--------------|
-| 🔍 **Discovery** | Finds real businesses matching the ICP (Serper "places" search) |
-| 📇 **Enrichment** | Scrapes each website for email, socials, and opportunity signals |
-| 🎯 **Scoring** | An LLM (Gemini) scores fit 0–100 with a grounded reason |
-| 📊 **Output** | A sorted, scored lead table + one-click CSV export |
+| **Discovery** | Finds real businesses matching the ICP (Serper "places" search) |
+| **Enrichment** | Scrapes each website for email, socials, and opportunity signals |
+| **Scoring** | An LLM (Gemini) scores fit 0–100 with a grounded reason |
+| **Output** | A sorted, scored lead table + one-click CSV export |
 
 The whole thing runs on **free-tier** services and scrapes **only public data**.
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 ICP + offer
     │
     ▼
-🔍 discovery.py   → finds businesses (name, phone, website, rating)
+ discovery.py   → finds businesses (name, phone, website, rating)
     │
     ▼
-📇 enrichment.py  → scrapes websites concurrently (email, socials, signals)
+ enrichment.py  → scrapes websites concurrently (email, socials, signals)
     │
     ▼
-🎯 scoring.py     → Gemini scores fit (0–100) + reason, grounded in real data
+ scoring.py     → Gemini scores fit (0–100) + reason, grounded in real data
     │
     ▼
-📊 UI / CSV       → sorted lead list you can act on
+ UI / CSV       → sorted lead list you can act on
 ```
 
 Async + a semaphore let enrichment and scoring run in parallel without hitting rate limits.
 
 ---
 
-## 🚀 Setup
+##  Setup
 
 1. **Clone & install**
    ```bash
@@ -66,23 +66,3 @@ Async + a semaphore let enrichment and scoring run in parallel without hitting r
    ```
 
 ---
-
-## ⚙️ Configuring the target
-
-Everything is configurable — set the ICP in the sidebar (industry, location, offer,
-what makes a good fit, buying signals). Point it at **any** local vertical: dental
-clinics, salons, HVAC, law firms, med-spas, and so on.
-
----
-
-## 🛡️ Ethics & compliance
-
-- Uses only **publicly available** business data; no logins, no personal data.
-- Produces drafts/lists for **human review** — it does not mass-send anything.
-- Respects timeouts and reasonable request behaviour.
-
----
-
-## 🧰 Tech stack
-
-Python · httpx (async) · BeautifulSoup · Pydantic v2 · Google Gemini · Serper · Streamlit
