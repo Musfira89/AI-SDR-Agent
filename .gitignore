@@ -12,4 +12,5 @@ venv/
 
 # Output
 *.csv
+*.db
 leads_output/

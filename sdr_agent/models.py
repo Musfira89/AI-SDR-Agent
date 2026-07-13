@@ -34,6 +34,31 @@ class ICP(BaseModel):
     )
 
 
+class Finding(BaseModel):
+    """One verified piece of research about a lead (Phase 2).
+
+    Every fact the outreach writer uses must trace back to one of these —
+    that traceability is our anti-hallucination guardrail.
+    """
+
+    text: str
+    source: str = ""     # URL or "places_data"
+    query: str = ""      # the search query that surfaced it
+
+
+class OutreachDraft(BaseModel):
+    """A personalized outreach sequence for one lead (Phase 2)."""
+
+    subject: str
+    body: str
+    followup_1: str = ""
+    followup_2: str = ""
+    cited_facts: list[str] = Field(default_factory=list)
+    approved: bool = False       # did the verifier approve it?
+    critique: str | None = None  # verifier feedback (used for the rewrite loop)
+    attempts: int = 1
+
+
 class Lead(BaseModel):
     """A single prospect. Fields are filled in across the three pipeline stages."""
 
@@ -57,3 +82,10 @@ class Lead(BaseModel):
     fit_score: int | None = None             # 0-100
     score_reason: str | None = None
     recommended: bool | None = None
+
+    # --- Memory ---
+    previously_seen: bool = False            # seen in an earlier run?
+
+    # --- Phase 2: research + outreach ---
+    findings: list[Finding] = Field(default_factory=list)
+    outreach: OutreachDraft | None = None

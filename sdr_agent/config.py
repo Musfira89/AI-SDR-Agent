@@ -22,12 +22,12 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    # API keys (loaded from GEMINI_API_KEY / SERPER_API_KEY)
-    gemini_api_key: str = ""
+    # API keys (loaded from GROQ_API_KEY / SERPER_API_KEY)
+    groq_api_key: str = ""
     serper_api_key: str = ""
 
     # Model + tuning
-    gemini_model: str = "gemini-2.0-flash"
+    groq_model: str = "llama-3.3-70b-versatile"
     enrichment_concurrency: int = 5   # how many websites to scrape at once
     scoring_concurrency: int = 3      # keep low to respect free-tier LLM rate limits
     request_timeout: float = 15.0     # seconds per HTTP request

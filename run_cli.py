@@ -7,6 +7,12 @@ Edit the ICP below or just use the demo default.
 from __future__ import annotations
 
 import asyncio
+import sys
+
+# Windows consoles often default to a legacy encoding (cp1252) that cannot
+# print unicode; force UTF-8 so output never crashes the run.
+if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
+    sys.stdout.reconfigure(encoding="utf-8")
 
 from sdr_agent.config import DEFAULT_ICP
 from sdr_agent.pipeline import run_pipeline
@@ -22,7 +28,7 @@ async def main() -> None:
         score = lead.fit_score if lead.fit_score is not None else "-"
         print(f"[{score:>3}] {lead.name}  ({lead.website or 'no site'})")
         if lead.score_reason:
-            print(f"      → {lead.score_reason}")
+            print(f"      reason: {lead.score_reason}")
 
     path = export_to_csv(leads, "leads.csv")
     print(f"\nSaved {len(leads)} leads to {path.resolve()}")
